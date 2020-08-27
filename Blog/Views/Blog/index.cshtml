@@ -1,0 +1,40 @@
+﻿@model IEnumerable<Blog>
+@{
+    ViewData["Title"] = "View";
+}
+
+<partial name="~/Views/Shared/_sidebar.cshtml" />
+<div id="body">
+    @foreach (Blog blog in Model)
+    {
+        <div class="blogPost">
+            <h5>@blog.Title</h5>
+            <div class="header">
+                <small class="time">@blog.Create_Ts.ToString("yyyy-MM-dd hh:mm")</small>
+                @{Random rnd = new Random();
+                    int ranComment = rnd.Next(1,13);}
+                <small class="orange">(+@ranComment)</small>
+            </div>
+            
+            <div class="blogContent">
+                @blog.Markdown_Content
+            </div>
+            <div class="blogFooter">
+                @if (!string.IsNullOrEmpty(blog.Tags))
+                {
+                    <div class="tags">
+                        Tags:
+                        @foreach (var item in blog.Tags.Split(','))
+                        {
+                            <a href="/tags/@item" class="l">@item</a>
+                        }
+                    </div>
+                }
+            </div>
+        </div>
+    }
+
+
+
+</div>
+
