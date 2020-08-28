@@ -1,25 +1,37 @@
 ﻿@model IEnumerable<Blog>
 @{
-    ViewData["Title"] = "View";
+    ViewData["Title"] = "Title";
 }
 
 <partial name="~/Views/Shared/_sidebar.cshtml" />
-<div id="body">
+<div id="blogBody">
     @foreach (Blog blog in Model)
     {
         <div class="blogPost">
-            <h5>@blog.Title</h5>
+            <a class="blogTitle" href="/blog/@blog.Id">@blog.Title</a>
             <div class="header">
-                <small class="time">@blog.Create_Ts.ToString("yyyy-MM-dd hh:mm")</small>
+                <small class="gray">@blog.Create_Ts.ToString("yyyy-MM-dd hh:mm")</small>
                 @{Random rnd = new Random();
-                    int ranComment = rnd.Next(1,13);}
-                <small class="orange">(+@ranComment)</small>
+                    int ranComment = rnd.Next(1, 13);
+                    int ranReadCount = rnd.Next(1, 10000);}
+                <small class="gray">@string.Format("{0:n0}+", ranReadCount%100*100)</small>
+                <small class="orange">(@ranComment)</small>
             </div>
-            
             <div class="blogContent">
-                @blog.Markdown_Content
+                @if ((Boolean)ViewData["Preview"])
+                {
+                    @(blog.Markdown_Content.Substring(0, 500) + "...");<a href="/blog/@blog.Id" class="l">(more)</a>
+                }
+                else
+                {
+                    @blog.Markdown_Content;
+                }
             </div>
             <div class="blogFooter">
+                <div class="category">
+                    Category:
+                    <a href="/category/@blog.Category" class="l">@blog.Category</a>
+                </div>
                 @if (!string.IsNullOrEmpty(blog.Tags))
                 {
                     <div class="tags">
@@ -33,8 +45,6 @@
             </div>
         </div>
     }
-
-
-
+    <div class="pageIndexer">1,2,3,4,5</div>
 </div>
 

@@ -27,7 +27,8 @@ a {
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
-  font-size: 14px;
+    font-size: 14px;
+    overflow-y: scroll;
 }
 @media (min-width: 768px) {
   html {
@@ -73,6 +74,11 @@ body {
 /*my part
     --------------------------------------------------------------------------
 */
+#blogBody {
+    margin-bottom: 60px;
+    width: 75%;
+    float: left;
+}
 #sidebar {
     margin-top: 40px;
     width: 20%;
@@ -99,10 +105,6 @@ body {
 #avator #icon {
     max-width: 100%;
 }
-#body {
-    width: 75%;
-    float: left;
-}
 .blogPost {
     width: auto;
     margin: auto;
@@ -116,15 +118,27 @@ body {
     display: block;
 }
 .blogFooter {
-    padding: 0 5px 0 5px;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
+    margin-top: 10px;
     zoom: 1;
     display: flow-root;
 }
 .tags {
     float: right;
     display: inline;
-    margin: 5px 5px 0;
+    padding: 2px 10px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    -moz-background-clip: padding;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+    background-color: #FAFAFA;
+    color: #888;
+}
+.category {
+    float: left;
+    display: inline;
     padding: 2px 10px;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
@@ -141,6 +155,10 @@ a.l {
     border: 0;
     text-decoration: none;
 }
+a.blogTitle{
+    font-size:larger;
+    color: black;
+}
 a.l:hover {
     color: #02A3FB;
     text-decoration: underline;
@@ -148,6 +166,6 @@ a.l:hover {
 small.orange {
     color: #f60;
 }
-small.time {
+small.gray {
     color: #999;
 }

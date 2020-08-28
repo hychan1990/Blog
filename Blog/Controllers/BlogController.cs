@@ -16,16 +16,14 @@ namespace Blog.Controllers
         /// <returns></returns>
         public IActionResult Index()
         {
-            List<Models.Blog> blogs = BlogFactory.GetBlogs();
+            List<Models.Blog> blogs = BlogFactory.GetBlogs(1);
+            ViewData["Preview"] = true;
             return View(blogs);
         }
         [Route("Blog/{id:int}")]
         public IActionResult Index(int id)
         {
-            if (id!=0)
-            {
-                ViewData["id"] = id;
-            }
+            ViewData["Preview"] = false;
             List<Models.Blog> blogs = BlogFactory.GetBlog(id);
             return View(blogs);
         }
