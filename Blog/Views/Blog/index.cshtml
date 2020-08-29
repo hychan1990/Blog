@@ -13,18 +13,19 @@
                 <small class="gray">@blog.Create_Ts.ToString("yyyy-MM-dd hh:mm")</small>
                 @{Random rnd = new Random();
                     int ranComment = rnd.Next(1, 13);
-                    int ranReadCount = rnd.Next(1, 10000);}
-                <small class="gray">@string.Format("{0:n0}+", ranReadCount%100*100)</small>
+                    int ranReadCount = rnd.Next(1, 10000);
+                }
+                <small class="gray">@string.Format("{0:n0}+", ranReadCount % 100 * 100)</small>
                 <small class="orange">(@ranComment)</small>
             </div>
             <div class="blogContent">
                 @if ((Boolean)ViewData["Preview"])
                 {
-                    @(blog.Markdown_Content.Substring(0, 500) + "...");<a href="/blog/@blog.Id" class="l">(more)</a>
+                    @(new string(blog.Markdown_Content.Take(500).ToArray()) + "...");<a href="/blog/@blog.Id" class="l">(more)</a>
                 }
                 else
                 {
-                    @blog.Markdown_Content;
+                    @Html.Raw(Westwind.AspNetCore.Markdown.Markdown.Parse(blog.Markdown_Content))
                 }
             </div>
             <div class="blogFooter">
@@ -45,6 +46,27 @@
             </div>
         </div>
     }
-    <div class="pageIndexer">1,2,3,4,5</div>
+    @if ((Boolean)ViewData["Preview"])
+    {
+        <div class="pageIndexer">
+            @{int currentPage = 1; int totalPages = BlogFactory.GetTotalPages(); }
+            @if (Context.Request.Path.Value.Contains("/page"))
+            {
+                currentPage = int.Parse(Context.Request.Path.ToString().Split("/page")[1].Remove(0, 1));
+            }
+            @if (currentPage >= 4)
+            {
+                <a href="/page/1" class="l">@("1...")</a>
+            }
+            @*The + 1 is ness*@
+            @for (int i = Math.Max(currentPage - 2, 1); i < Math.Min(totalPages + 1, currentPage + 2 + 1); i++)
+            {
+                <a href="/page/@i" class="l @(currentPage==i?"highlighted":"")">@i</a>
+            }
+            @if (currentPage < totalPages)
+            {
+                <a href="/page/@(currentPage+1)" class="l">@(">")</a>
+            }
+        </div>
+    }
 </div>
-

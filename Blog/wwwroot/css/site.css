@@ -122,6 +122,7 @@ body {
     margin-top: 10px;
     zoom: 1;
     display: flow-root;
+    font-size:small;
 }
 .tags {
     float: right;
@@ -163,9 +164,17 @@ a.l:hover {
     color: #02A3FB;
     text-decoration: underline;
 }
+a.l.highlighted {
+    background-color: steelblue;
+    color:white;
+}
 small.orange {
     color: #f60;
 }
 small.gray {
     color: #999;
+}
+.pageIndexer{
+    text-align:center;
+    margin-bottom:20px;
 }

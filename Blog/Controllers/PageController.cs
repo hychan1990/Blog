@@ -15,5 +15,12 @@ namespace Blog.Controllers
             ViewData["Preview"] = true;
             return View("~/Views/Blog/index.cshtml", blogs);
         }
+        [Route("/page/{id:int}")]
+        public IActionResult Index(int id)
+        {
+            List<Models.Blog> blogs = BlogFactory.GetBlogs(id);
+            ViewData["Preview"] = true;
+            return View("~/Views/Blog/index.cshtml", blogs);
+        }
     }
 }
