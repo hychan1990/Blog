@@ -4,19 +4,34 @@
 
 <div id="sidebar">
     <div class="sidebarComponent">
+        @{Author me = SidebarFactory.GetAuthor();}
         <div id="avator">
-            <img id="icon" src="~/resource/icon.png" />
-            <small>MikeChan</small>
+            <img id="icon" src="@me.Profile_pic" />
+            <small>@me.Name</small>
         </div>
-        <small>a C# Programmer in Hong Kong</small>
+        <small>@me.Introduction</small>
     </div>
     <div class="sidebarComponent">
-        <small>blog by date</small>
+        <small>Article by date</small>
     </div>
     <div class="sidebarComponent">
-        <small> blog by category</small>
+        <small>Article by category</small>
+        <br />
+        @{var category = SidebarFactory.GetSortedCount("category").Take(50);
+        }
+        @foreach (var pair in category)
+        {
+            <a href="/tag/@pair.Key" class="l" style="font-size:small">@(string.Format("{0}({1})", pair.Key, pair.Value))</a>
+        }
     </div>
     <div class="sidebarComponent">
-        <small>blog tags</small>
+        <small>Article by tags</small>
+        <br />
+        @{var tags = SidebarFactory.GetSortedCount("tags").Take(50);
+        }
+        @foreach (var pair in tags)
+        {
+            <a href="/tag/@pair.Key" class="l" style="font-size:small">@(string.Format("{0}({1})", pair.Key, pair.Value))</a>
+        }
     </div>
 </div>
