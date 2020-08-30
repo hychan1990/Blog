@@ -78,7 +78,10 @@ body {
     margin-bottom: 60px;
     width: 75%;
     float: left;
+    margin-left: 5px;
+    margin-right: 5px;
 }
+
 #sidebar {
     margin-top: 40px;
     width: 20%;
@@ -110,8 +113,6 @@ body {
     margin: auto;
     margin-bottom: 40px;
     margin-top: 40px;
-    margin-left: 5px;
-    margin-right: 5px;
     border-bottom: 1px solid #EEE;
 }
 .blogContent {
@@ -150,7 +151,18 @@ body {
     background-color: #FAFAFA;
     color: #888;
 }
+.NextPrevPanel{
 
+}
+.NextBlog{
+    float:right
+}
+.PrevBlog{
+    float:left
+}
+/*Small item
+    --------------------------------------------------------------------------
+*/
 a.l {
     color: #0084B4;
     border: 0;

@@ -69,4 +69,25 @@
             }
         </div>
     }
+    else
+    {
+    <div class="NextPrevPanel">
+        @{BlogIdPair PrevBlog = @BlogFactory.GetPrevBlog((int)ViewData["BlogId"]);}
+        @{BlogIdPair NextBlog = @BlogFactory.GetNextBlog((int)ViewData["BlogId"]);}
+        @if(PrevBlog!=null){
+        <div class="PrevBlog">
+            <small>Prev Article</small>
+            <br />
+            <a href="/blog/@PrevBlog.Id" class="l">@PrevBlog.Title</a>
+        </div>
+        }
+        @if(NextBlog!=null){
+        <div class="NextBlog">
+            <small>Next Article</small>
+            <br />
+            <a href="/blog/@NextBlog.Id" class="l">@NextBlog.Title</a>
+        </div>
+        }
+    </div>
+    }
 </div>

@@ -8,7 +8,6 @@ namespace Blog.Models
     public class Blog
     {
         public int Id { get; set; }
-        public string Url { get; set; }
         public string Title { get; set; }
         public string Markdown_Content { get; set; }
         public string Category { get; set; }

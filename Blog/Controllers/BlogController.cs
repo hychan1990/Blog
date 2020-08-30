@@ -24,6 +24,7 @@ namespace Blog.Controllers
         public IActionResult Individual(int id)
         {
             ViewData["Preview"] = false;
+            ViewData["BlogId"] = id;
             List<Models.Blog> blogs = BlogFactory.GetBlog(id);
             return View("index", blogs);
         }
