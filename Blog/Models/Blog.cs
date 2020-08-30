@@ -15,11 +15,8 @@ namespace Blog.Models
         public string Tags { get; set; }
         public string Author_Id { get; set; }
         public string Thumbnail { get; set; }
-        public string Creator { get; set; }
         public DateTime Create_Ts { get; set; }
-        public string Modifier { get; set; }
         public DateTime Modify_Ts { get; set; }
-        public bool Visible { get; set; }
         public byte[] Password { get; set; }
         public bool Deleted { get; set; }
         public bool NoComment { get; set; }

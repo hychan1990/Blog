@@ -45,7 +45,7 @@ namespace Blog.Models
             page = page - 1;
             using (var connection = new SqlConnection(blogConnStr))
             {
-                return connection.Query<Blog>($@"SELECT * FROM blog where visible = 1 and deleted = 0
+                return connection.Query<Blog>($@"SELECT * FROM blog where deleted = 0
 ORDER BY id desc OFFSET {page * blogPerPage} ROWS FETCH NEXT {blogPerPage} ROWS ONLY;").ToList();
                 
                 //return connection.Query<Blog>($"select top {page*blogPerPage} * from blog where visible = 1 order by id desc").ToList();
@@ -58,7 +58,7 @@ ORDER BY id desc OFFSET {page * blogPerPage} ROWS FETCH NEXT {blogPerPage} ROWS 
             using (var connection = new SqlConnection(blogConnStr))
             {
                 //id is int so 5 = 0, 15 = 1, need to add 1
-                return connection.QuerySingle<int>($"SELECT COUNT(id)/10+1 as page FROM blog where visible = 1 and deleted = 0");
+                return connection.QuerySingle<int>($"SELECT COUNT(id)/10+1 as page FROM blog where deleted = 0");
                
             }
         }
@@ -71,7 +71,7 @@ ORDER BY id desc OFFSET {page * blogPerPage} ROWS FETCH NEXT {blogPerPage} ROWS 
         {
             using (var connection = new SqlConnection(blogConnStr))
             {
-                return connection.Query<Blog>($"select * from dbo.blog where id={id} and visible = 1 and deleted = 0").ToList();
+                return connection.Query<Blog>($"select * from dbo.blog where id={id} and deleted = 0").ToList();
             }
             //return Sql.Query<Blog>(blogConnStr, $"select * from dbo.blog where id={id}");
         }
