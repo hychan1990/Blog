@@ -20,7 +20,7 @@ namespace Blog.Controllers
             ViewData["ListMode"] = true;
             return View(blogs);
         }
-        [Route("/Blog/{id:int}")]
+        [Route("/blog/{id:int}")]
         public IActionResult Individual(int id)
         {
             ViewData["ListMode"] = false;

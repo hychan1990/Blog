@@ -3,9 +3,13 @@
 *@
 <div class="pageIndexer">
     @{int currentPage = 1;int totalPages = 1;
-        if (ViewData["SearchMode"]=="tag")
+        if (ViewData["SearchMode"] == "tag")
         {
             totalPages = BlogFactory.GetTotalPagesByTag((string)ViewData["CurrentSearchWord"]);
+        }
+        else if (ViewData["SearchMode"] == "category")
+        {
+            totalPages = BlogFactory.GetTotalPagesByCategory((string)ViewData["CurrentSearchWord"]);
         }
         else
         {
