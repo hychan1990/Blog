@@ -17,13 +17,13 @@ namespace Blog.Controllers
         public IActionResult Index()
         {
             List<Models.Blog> blogs = BlogFactory.GetBlogs(1);
-            ViewData["Preview"] = true;
+            ViewData["ListMode"] = true;
             return View(blogs);
         }
         [Route("/Blog/{id:int}")]
         public IActionResult Individual(int id)
         {
-            ViewData["Preview"] = false;
+            ViewData["ListMode"] = false;
             ViewData["BlogId"] = id;
             List<Models.Blog> blogs = BlogFactory.GetBlog(id);
             return View("index", blogs);

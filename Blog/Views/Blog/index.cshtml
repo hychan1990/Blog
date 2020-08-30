@@ -19,7 +19,7 @@
                 <small class="orange">(@ranComment)</small>
             </div>
             <div class="blogContent">
-                @if ((Boolean)ViewData["Preview"])
+                @if ((Boolean)ViewData["ListMode"])
                 {
                     @(new string(blog.Markdown_Content.Take(500).ToArray()) + "...");<a href="/blog/@blog.Id" class="l">(more)</a>
                 }
@@ -46,7 +46,7 @@
             </div>
         </div>
     }
-    @if ((Boolean)ViewData["Preview"])
+    @if ((Boolean)ViewData["ListMode"])
     {
         <div class="pageIndexer">
             @{int currentPage = 1; int totalPages = BlogFactory.GetTotalPages(); }
