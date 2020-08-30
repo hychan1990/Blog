@@ -50,9 +50,9 @@
     {
         <div class="pageIndexer">
             @{int currentPage = 1; int totalPages = BlogFactory.GetTotalPages(); }
-            @if (Context.Request.Path.Value.Contains("/page"))
+            @if (ViewData["CurrentPage"]!=null)
             {
-                currentPage = int.Parse(Context.Request.Path.ToString().Split("/page")[1].Remove(0, 1));
+                currentPage = (int)ViewData["CurrentPage"];
             }
             @if (currentPage >= 4)
             {
