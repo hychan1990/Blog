@@ -39,7 +39,7 @@
                         Tags:
                         @foreach (var item in blog.Tags.Split(','))
                         {
-                            <a href="/tags/@item" class="l">@item</a>
+                            if(item!=""){<a href="/tags/@item" class="l" style="margin-right:4px">@item</a>}
                         }
                     </div>
                 }
