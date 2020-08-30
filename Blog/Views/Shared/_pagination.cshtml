@@ -1,0 +1,32 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+<div class="pageIndexer">
+    @{int currentPage = 1;int totalPages = 1;
+        if (ViewData["SearchMode"]=="tag")
+        {
+            totalPages = BlogFactory.GetTotalPagesByTag((string)ViewData["CurrentSearchWord"]);
+        }
+        else
+        {
+            totalPages = BlogFactory.GetTotalPages();
+        }
+         }
+    @if (ViewData["CurrentPage"] != null)
+    {
+        currentPage = (int)ViewData["CurrentPage"];
+    }
+    @if (currentPage >= 4)
+    {
+        <a href="@(ViewData["SearchMode"]!=null?$"/{ViewData["SearchMode"]}/{ViewData["CurrentSearchWord"]}":"")/page/1" class="l">@("1...")</a>
+    }
+    @*The + 1 is ness*@
+    @for (int i = Math.Max(currentPage - 2, 1); i < Math.Min(totalPages + 1, currentPage + 2 + 1); i++)
+    {
+        <a href="@(ViewData["SearchMode"]!=null?$"/{ViewData["SearchMode"]}/{ViewData["CurrentSearchWord"]}":"")/page/@i" class="l @(currentPage==i?"highlighted":"")">@i</a>
+    }
+    @if (currentPage < totalPages)
+    {
+        <a href="@(ViewData["SearchMode"]!=null?$"/{ViewData["SearchMode"]}/{ViewData["CurrentSearchWord"]}":"")/page/@(currentPage+1)" class="l">@(">")</a>
+    }
+</div>

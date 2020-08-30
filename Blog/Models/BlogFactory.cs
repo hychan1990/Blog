@@ -36,7 +36,7 @@ namespace Blog.Models
         /// </summary>
         /// <param name="page">1 for the first page</param>
         /// <returns></returns>
-        public static List<Blog> GetBlogs(int page)
+        public static List<Blog> GetBlogsByPage(int page)
         {
             if (page == 0)
             {
@@ -44,20 +44,47 @@ namespace Blog.Models
             }
             using (var connection = new SqlConnection(blogConnStr))
             {
-                return connection.Query<Blog>($@"select * from GetPage({page},{blogPerPage})").ToList();
+                return connection.Query<Blog>($@"select * from GetPage(@page,@blogPerPage)"
+                    , new { page = page, blogPerPage = blogPerPage }).ToList();
 
                 //return connection.Query<Blog>($"select top {page*blogPerPage} * from blog where visible = 1 order by id desc").ToList();
             }
 
-            //return Sql.Query<Blog>(blogConnStr, "select * from dbo.blog");
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="page">1 for the first page</param>
+        /// <returns></returns>
+        public static List<Blog> GetBlogsByTag(int page, string tag)
+        {
+            if (page == 0)
+            {
+                throw new Exception("page can't be 0, please pass 1 or larger.");
+            }
+            using (var connection = new SqlConnection(blogConnStr))
+            {
+                return connection.Query<Blog>($@"select * from GetPageByTag(@page,@blogPerPage,@tag)"
+                    , new { page = page, blogPerPage = blogPerPage, tag = tag }).ToList();
+
+                //return connection.Query<Blog>($"select top {page*blogPerPage} * from blog where visible = 1 order by id desc").ToList();
+            }
+
         }
         public static int GetTotalPages()
         {
             using (var connection = new SqlConnection(blogConnStr))
             {
                 //id is int so 5 = 0, 15 = 1, need to add 1
-                return connection.QuerySingle<int>($"SELECT COUNT(id)/10+1 as page FROM view_visible_blog");
-
+                return connection.QuerySingle<int>($"select dbo.GetTotalPages()");
+            }
+        }
+        public static int GetTotalPagesByTag(string tag)
+        {
+            using (var connection = new SqlConnection(blogConnStr))
+            {
+                //id is int so 5 = 0, 15 = 1, need to add 1
+                return connection.QuerySingle<int>($@"SELECT dbo.GetTotalPagesByTag(@tag)", new { tag = tag });
             }
         }
         /// <summary>
@@ -69,17 +96,17 @@ namespace Blog.Models
         {
             using (var connection = new SqlConnection(blogConnStr))
             {
-                return connection.Query<Blog>($"select * from view_visible_blog where id={id}").ToList();
+                return connection.Query<Blog>($"select * from GetVisibleBlogs() where id=@id", new { id = id }).ToList();
             }
             //return Sql.Query<Blog>(blogConnStr, $"select * from dbo.blog where id={id}");
         }
-        public static BlogIdPair GetNextBlog(int id)
+        public static BlogIdPair GetBlogNextBlog(int id)
         {
             try
             {
                 using (var connection = new SqlConnection(blogConnStr))
                 {
-                    return connection.QuerySingle<BlogIdPair>($"select * from GetNextBlog({id})");
+                    return connection.QuerySingle<BlogIdPair>($"select * from GetBlogNextBlog(@id)", new { id = id });
                 }
             }
             catch (Exception ex)
@@ -88,13 +115,13 @@ namespace Blog.Models
             }
 
         }
-        public static BlogIdPair GetPrevBlog(int id)
+        public static BlogIdPair GetBlogPrevBlog(int id)
         {
             try
             {
                 using (var connection = new SqlConnection(blogConnStr))
                 {
-                    return connection.QuerySingle<BlogIdPair>($"select * from GetPrevBlog({id})");
+                    return connection.QuerySingle<BlogIdPair>($"select * from GetBlogPrevBlog(@id)", new { id = id });
                 }
             }
             catch (Exception ex)

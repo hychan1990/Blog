@@ -16,7 +16,7 @@ namespace Blog.Controllers
         /// <returns></returns>
         public IActionResult Index()
         {
-            List<Models.Blog> blogs = BlogFactory.GetBlogs(1);
+            List<Models.Blog> blogs = BlogFactory.GetBlogsByPage(1);
             ViewData["ListMode"] = true;
             return View(blogs);
         }

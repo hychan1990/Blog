@@ -5,6 +5,13 @@
 
 <partial name="~/Views/Shared/_sidebar.cshtml" />
 <div id="blogBody">
+    @if (ViewData["CurrentRoute"] != null)
+    {
+        <div class="blogPost">
+            <a class="blogTitle">Searching: @ViewData["CurrentRoute"]</a>
+        </div>
+    }
+
     @foreach (Blog blog in Model)
     {
         <div class="blogPost">
@@ -22,6 +29,7 @@
                 @if ((Boolean)ViewData["ListMode"])
                 {
                     @(new string(blog.Markdown_Content.Take(500).ToArray()) + "...");<a href="/blog/@blog.Id" class="l">(more)</a>
+
                 }
                 else
                 {
@@ -39,8 +47,9 @@
                         Tags:
                         @foreach (var item in blog.Tags.Split(','))
                         {
-                            if(item!=""){<a href="/tags/@item" class="l" style="margin-right:4px">@item</a>}
-                        }
+                            if (item != "")
+                            {<a href="/tags/@item.Trim()" class="l" style="margin-right:4px">@item.Trim()</a>}
+                    }
                     </div>
                 }
             </div>
@@ -48,46 +57,29 @@
     }
     @if ((Boolean)ViewData["ListMode"])
     {
-        <div class="pageIndexer">
-            @{int currentPage = 1; int totalPages = BlogFactory.GetTotalPages(); }
-            @if (ViewData["CurrentPage"]!=null)
-            {
-                currentPage = (int)ViewData["CurrentPage"];
-            }
-            @if (currentPage >= 4)
-            {
-                <a href="/page/1" class="l">@("1...")</a>
-            }
-            @*The + 1 is ness*@
-            @for (int i = Math.Max(currentPage - 2, 1); i < Math.Min(totalPages + 1, currentPage + 2 + 1); i++)
-            {
-                <a href="/page/@i" class="l @(currentPage==i?"highlighted":"")">@i</a>
-            }
-            @if (currentPage < totalPages)
-            {
-                <a href="/page/@(currentPage+1)" class="l">@(">")</a>
-            }
-        </div>
+        <partial name="~/Views/Shared/_pagination.cshtml" />
     }
     else
     {
-    <div class="NextPrevPanel">
-        @{BlogIdPair PrevBlog = @BlogFactory.GetPrevBlog((int)ViewData["BlogId"]);}
-        @{BlogIdPair NextBlog = @BlogFactory.GetNextBlog((int)ViewData["BlogId"]);}
-        @if(PrevBlog!=null){
-        <div class="PrevBlog">
-            <small>Prev Article</small>
-            <br />
-            <a href="/blog/@PrevBlog.Id" class="l">@PrevBlog.Title</a>
+        <div class="NextPrevPanel">
+            @{BlogIdPair PrevBlog = @BlogFactory.GetBlogPrevBlog((int)ViewData["BlogId"]);}
+            @{BlogIdPair NextBlog = @BlogFactory.GetBlogNextBlog((int)ViewData["BlogId"]);}
+            @if (PrevBlog != null)
+            {
+                <div class="PrevBlog">
+                    <small>Prev Article</small>
+                    <br />
+                    <a href="/blog/@PrevBlog.Id" class="l">@PrevBlog.Title</a>
+                </div>
+            }
+            @if (NextBlog != null)
+            {
+                <div class="NextBlog">
+                    <small>Next Article</small>
+                    <br />
+                    <a href="/blog/@NextBlog.Id" class="l">@NextBlog.Title</a>
+                </div>
+            }
         </div>
-        }
-        @if(NextBlog!=null){
-        <div class="NextBlog">
-            <small>Next Article</small>
-            <br />
-            <a href="/blog/@NextBlog.Id" class="l">@NextBlog.Title</a>
-        </div>
-        }
-    </div>
     }
 </div>

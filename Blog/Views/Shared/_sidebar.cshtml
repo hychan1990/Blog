@@ -21,7 +21,7 @@
         }
         @foreach (var pair in category)
         {
-            <a href="/tag/@pair.Key" class="l" style="font-size:small">@(string.Format("{0}({1})", pair.Key, pair.Value))</a>
+            <a href="/category/@pair.Key.Trim()" class="l" style="font-size:small">@(string.Format("{0}({1})", pair.Key, pair.Value))</a>
         }
     </div>
     <div class="sidebarComponent">
@@ -31,7 +31,7 @@
         }
         @foreach (var pair in tags)
         {
-            <a href="/tag/@pair.Key" class="l" style="font-size:small">@(string.Format("{0}({1})", pair.Key, pair.Value))</a>
+            <a href="/tag/@pair.Key.Trim().Replace("#","%23")" class="l" style="font-size:small">@(string.Format("{0}({1})", pair.Key, pair.Value))</a>
         }
     </div>
 </div>

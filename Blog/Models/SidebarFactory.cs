@@ -19,6 +19,17 @@ namespace Blog.Models
                 return connection.QuerySingle<Author>("select top 1 * from author where id = 1 order by id desc");
             }
         }
+        /*
+        public static List<TagsCount> GetTags()
+        {
+            using (var connection = new SqlConnection(blogConnStr))
+            {
+                return connection.Query<TagsCount>("select * from GetTagsCount() order by count desc").ToList();
+            }
+        }
+        */
+
+        
         public static Dictionary<string, int> GetSortedCount(string tableColumn)
         {
             Dictionary<string, int> dict = new Dictionary<string, int>();
@@ -30,15 +41,16 @@ namespace Blog.Models
                     string[] colValue = colValues.Split(',');
                     foreach (var col in colValue)
                     {
-                        if (col.Trim() != "")
+                        string colTrim = col.Trim();
+                        if (colTrim != "")
                         {
-                            if (dict.ContainsKey(col))
+                            if (dict.ContainsKey(colTrim))
                             {
-                                dict[col]++;
+                                dict[colTrim]++;
                             }
                             else
                             {
-                                dict[col] = 1;
+                                dict[colTrim] = 1;
                             }
                         }
                     }
@@ -47,5 +59,6 @@ namespace Blog.Models
             var filtered = from entry in dict orderby entry.Value descending select entry;
             return filtered.ToDictionary(x => x.Key, x => x.Value);
         }
+        
     }
 }
