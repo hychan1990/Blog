@@ -20,12 +20,12 @@ namespace Blog.Controllers
             ViewData["Preview"] = true;
             return View(blogs);
         }
-        [Route("Blog/{id:int}")]
-        public IActionResult Index(int id)
+        [Route("/Blog/{id:int}")]
+        public IActionResult Individual(int id)
         {
             ViewData["Preview"] = false;
             List<Models.Blog> blogs = BlogFactory.GetBlog(id);
-            return View(blogs);
+            return View("index", blogs);
         }
 
     }
