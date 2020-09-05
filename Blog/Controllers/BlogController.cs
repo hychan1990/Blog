@@ -45,6 +45,10 @@ namespace Blog.Controllers
         [HttpPost]
         public IActionResult Create(Blog.Models.Blog blog)
         {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
             blog.Author_Id = 1;
             blog.Create_Ts = DateTime.Now;
             blog.Deleted = false;
