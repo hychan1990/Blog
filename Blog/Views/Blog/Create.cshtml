@@ -1,0 +1,48 @@
+﻿@model Blog
+@{
+}
+<head>
+    @if (TempData["Message"] != null)
+    {
+        <script type="text/javascript">
+        var message = @Html.Raw(Json.Serialize(TempData["Message"]));
+        alert(message);
+        </script>
+    }
+</head>
+<partial name="~/Views/Shared/_sidebar.cshtml" />
+<div id="blogBody">
+    <p>@TempData["ip"]</p>
+    <form action="/Blog/Create" method="post">
+        <div class="form-group">
+            <label class="col-md-2" for="title">Title</label>
+            <input class="col-md-8" type="text" name="title" id="title" />
+        </div>
+        <div class="form-group">
+            <label class="col-md-2" for="category">Category</label>
+            <input class="col-md-8" type="text" name="Category" id="category" />
+        </div>
+        <div class="form-group">
+            <label class="col-md-2" for="tags">Tags</label>
+            <input class="col-md-8" type="text" name="tags" id="tags" />
+        </div>
+        <div class="form-group">
+            <label class="col-md-2" for="password">Password</label>
+            <input class="col-md-4" type="password" name="password" value="" id="password" />
+        </div>
+        <div class="form-group">
+            <label class="col-md-2" for="noComment">No Comment</label>
+            <input class="col-md-1" type="checkbox" name="no_Comment" id="noComment" />
+        </div>
+        <div class="form-group">
+            <label class="col-md-2" for="noRobots">No Robots</label>
+            <input class="col-md-1" type="checkbox" name="no_Robots" id="noRobots" />
+        </div>
+        <div class="form-group">
+            <label class="col-md-2" for="content" style="vertical-align:top">Content</label>
+            <textarea class="col-md-8" name="markdown_Content" id="content"></textarea>
+        </div>
+        <hr style="border-top:1px solid #eee" />
+        <input type="submit" value="Submit" class="btn btn-default" style="border:1px solid black;" />
+    </form>
+</div>

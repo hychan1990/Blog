@@ -18,10 +18,7 @@ namespace Blog.Models
         {
 
         }
-        public static void UpdateCache()
-        {
-
-        }
+        #region get part
         public static List<Blog> GetBlogs()
         {
             using (var connection = new SqlConnection(blogConnStr))
@@ -156,6 +153,29 @@ namespace Blog.Models
                 return null;
             }
             
+        }
+        #endregion
+        public static void CreateBlog(Blog blog)
+        {
+            using (var connection = new SqlConnection(blogConnStr))
+            {
+
+                connection.Execute(@"execute dbo.sp_insert_blog @title,@markdown_content,@category,@tags,@author_id
+,@thumbnail,@deleted,@password,@no_comment,@no_robots",
+                    new
+                    {
+                        title = blog.Title,
+                        markdown_content = blog.Markdown_Content,
+                        category = blog.Category,
+                        tags = blog.Tags,
+                        author_id = blog.Author_Id,
+                        thumbnail = blog.Thumbnail,
+                        deleted = blog.Deleted,
+                        password = blog.Password,
+                        no_comment = blog.NoComment,
+                        no_robots = blog.NoRobots
+                    });
+            }
         }
     }
 }
