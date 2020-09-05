@@ -45,11 +45,6 @@ namespace Blog.Controllers
         [HttpPost]
         public IActionResult Create(Blog.Models.Blog blog)
         {
-            if (!ModelState.IsValid)
-            {
-                TempData["Message"] = "please check format.";
-                return View();
-            }
             blog.Author_Id = 1;
             blog.Create_Ts = DateTime.Now;
             blog.Deleted = false;
@@ -59,7 +54,7 @@ namespace Blog.Controllers
             }
             catch (Exception ex)
             {
-                TempData["Message"] = ex.ToString();
+                TempData["Message"] = "出現錯誤。";
                 return View();
             }
             
