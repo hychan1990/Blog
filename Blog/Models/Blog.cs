@@ -14,6 +14,7 @@ namespace Blog.Models
         [StringLength(200)]
         public string Title { get; set; }
         public string Markdown_Content { get; set; }
+        [Required]
         [StringLength(50)]
         public string Category { get; set; }
         [StringLength(50)]
