@@ -2,6 +2,7 @@
 @{
 }
 <head>
+    <script src="https://cdn.ckeditor.com/ckeditor5/22.0.0/classic/ckeditor.js"></script>
     @if (TempData["Message"] != null)
     {
         <script type="text/javascript">
@@ -10,39 +11,54 @@
         </script>
     }
 </head>
-<partial name="~/Views/Shared/_sidebar.cshtml" />
-<div id="blogBody">
+
+<div id="blogBody" class="col-md-8 col-sm-12 col-12">
     <p>@TempData["ip"]</p>
     <form action="/Blog/Create" method="post">
         <div class="form-group">
-            <label class="col-md-2" for="title">Title</label>
-            <input class="col-md-8" type="text" name="title" id="title" />
+            <label class="col-md-2" asp-for="Title" for="title">Title</label>
+            <input class="col-md-8" asp-for="Title" type="text" name="title" id="title" />
+            <span asp-validation-for="Title" class="text-danger col-md-1 small"></span>
         </div>
         <div class="form-group">
-            <label class="col-md-2" for="category">Category</label>
-            <input class="col-md-8" type="text" name="Category" id="category" />
+            <label class="col-md-2" asp-for="Category" for="category">Category</label>
+            <input class="col-md-8" asp-for="Category" type="text" name="Category" id="category" />
+            <span asp-validation-for="Category" class="text-danger col-md-1 small"></span>
         </div>
         <div class="form-group">
-            <label class="col-md-2" for="tags">Tags</label>
-            <input class="col-md-8" type="text" name="tags" id="tags" />
+            <label class="col-md-2" asp-for="Tags" for="tags">Tags</label>
+            <input class="col-md-8" asp-for="Tags" type="text" name="tags" id="tags" />
+            <span asp-validation-for="Tags" class="text-danger col-md-1 small"></span>
         </div>
         <div class="form-group">
-            <label class="col-md-2" for="password">Password</label>
-            <input class="col-md-4" type="password" name="password" value="" id="password" />
+            <label class="col-md-2" asp-for="Password" for="password">Password</label>
+            <input class="col-md-4" asp-for="Password" type="password" name="password" value="" id="password" />
+            <span asp-validation-for="Password" class="text-danger col-md-1 small"></span>
         </div>
         <div class="form-group">
-            <label class="col-md-2" for="noComment">No Comment</label>
-            <input class="col-md-1" type="checkbox" name="no_Comment" id="noComment" />
+            <label class="col-md-2" asp-for="NoComment" for="noComment">No Comment</label>
+            <input class="col-md-1" asp-for="NoComment" type="checkbox" name="no_Comment" id="noComment" />
+            <span asp-validation-for="NoComment" class="text-danger col-md-1 small"></span>
         </div>
         <div class="form-group">
-            <label class="col-md-2" for="noRobots">No Robots</label>
-            <input class="col-md-1" type="checkbox" name="no_Robots" id="noRobots" />
+            <label class="col-md-2" asp-for="NoRobots" for="noRobots">No Robots</label>
+            <input class="col-md-1" asp-for="NoRobots" type="checkbox" name="no_Robots" id="noRobots" />
+            <span asp-validation-for="NoRobots" class="text-danger"></span>
         </div>
         <div class="form-group">
             <label class="col-md-2" for="content" style="vertical-align:top">Content</label>
             <textarea class="col-md-8" name="markdown_Content" id="content"></textarea>
+            @*below querySelector('#content') meant replace the element of id="content"*@
+            <script>
+                ClassicEditor
+                    .create(document.querySelector('#content'))
+                    .catch(error => {
+                        console.error(error);
+                    });
+            </script>
         </div>
         <hr style="border-top:1px solid #eee" />
         <input type="submit" value="Submit" class="btn btn-default" style="border:1px solid black;" />
     </form>
 </div>
+<partial name="~/Views/Shared/_sidebar.cshtml" />
