@@ -38,19 +38,22 @@ namespace Blog.Models
                 var unsplited = connection.Query<string>($"select {tableColumn} from view_visible_blog").ToList();
                 foreach (var colValues in unsplited)
                 {
-                    string[] colValue = colValues.Split(',');
-                    foreach (var col in colValue)
+                    if (colValues != null)
                     {
-                        string colTrim = col.Trim();
-                        if (colTrim != "")
+                        string[] colValue = colValues.Split(',');
+                        foreach (var col in colValue)
                         {
-                            if (dict.ContainsKey(colTrim))
+                            string colTrim = col.Trim();
+                            if (colTrim != "")
                             {
-                                dict[colTrim]++;
-                            }
-                            else
-                            {
-                                dict[colTrim] = 1;
+                                if (dict.ContainsKey(colTrim))
+                                {
+                                    dict[colTrim]++;
+                                }
+                                else
+                                {
+                                    dict[colTrim] = 1;
+                                }
                             }
                         }
                     }
