@@ -28,8 +28,7 @@
             <div class="blogContent">
                 @if ((Boolean)ViewData["ListMode"])
                 {
-                    @(new string(blog.Markdown_Content.Take(500).ToArray()) + "...");<a href="/blog/@blog.Id" class="l">(more)</a>
-
+                    @(blog.Markdown_Content == null ? "" : new string(blog.Markdown_Content.Take(500).ToArray()));<a href="/blog/@blog.Id" class="l">@(blog.Markdown_Content != null && blog.Markdown_Content.Count() > 500 ? "...(more)" : "")</a>
                 }
                 else
                 {
