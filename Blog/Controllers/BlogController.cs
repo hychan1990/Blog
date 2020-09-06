@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Blog.Models;
 using Microsoft.AspNetCore.Http;
+using System.Net;
 
 namespace Blog.Controllers
 {
@@ -23,6 +24,7 @@ namespace Blog.Controllers
         {
             List<Models.Blog> blogs = BlogFactory.GetBlogsByPage(1);
             ViewData["ListMode"] = true;
+            ViewData["Title"] = "";
             return View(blogs);
         }
         [Route("/blog/{id:int}")]
@@ -31,12 +33,22 @@ namespace Blog.Controllers
             ViewData["ListMode"] = false;
             ViewData["BlogId"] = id;
             List<Models.Blog> blogs = BlogFactory.GetBlog(id);
-            return View("index", blogs);
+            if (blogs.Count>0)
+            {
+                ViewData["Title"] = blogs[0].Title;
+                BlogFactory.AddViewCount(id);
+                return View("index", blogs);
+            }
+            else
+            {
+                return Redirect("~/");
+            }
+            
         }
         public IActionResult Create()
         {
             TempData["ip"] = _accessor.HttpContext.Connection.RemoteIpAddress.ToString();
-            if (TempData["ip"].ToString() != "::1")
+            if (TempData["ip"].ToString() != "::1" || Request.Cookies["login"] != "1")
             {
                 return Redirect("~/");
             }
@@ -45,6 +57,11 @@ namespace Blog.Controllers
         [HttpPost]
         public IActionResult Create(Blog.Models.Blog blog)
         {
+            TempData["ip"] = _accessor.HttpContext.Connection.RemoteIpAddress.ToString();
+            if (TempData["ip"].ToString() != "::1" || Request.Cookies["login"] != "1")
+            {
+                return Redirect("~/");
+            }
             if (!ModelState.IsValid)
             {
                 return View();
