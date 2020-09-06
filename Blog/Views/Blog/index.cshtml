@@ -1,10 +1,7 @@
 ﻿@model IEnumerable<Blog>
-@{
-    ViewData["Title"] = "Title";
-}
 
-<partial name="~/Views/Shared/_sidebar.cshtml" />
-<div id="blogBody">
+
+<div id="blogBody" class="col-md-9">
     @if (ViewData["CurrentRoute"] != null)
     {
         <div class="blogPost">
@@ -22,17 +19,19 @@
                     int ranComment = rnd.Next(1, 13);
                     int ranReadCount = rnd.Next(1, 10000);
                 }
-                <small class="gray">@string.Format("{0:n0}+", ranReadCount % 100 * 100)</small>
-                <small class="orange">(@ranComment)</small>
+                <small class="gray view_count">@string.Format("{0:n0}", blog.view_count)</small>
+                <small class="orange comment_count">(@ranComment)</small>
             </div>
             <div class="blogContent">
                 @if ((Boolean)ViewData["ListMode"])
                 {
-                    @(blog.Markdown_Content == null ? "" : new string(blog.Markdown_Content.Take(500).ToArray()));<a href="/blog/@blog.Id" class="l">@(blog.Markdown_Content != null && blog.Markdown_Content.Count() > 500 ? "...(more)" : "")</a>
+                    @(blog.Markdown_Content == null ? "" : new string(System.Text.RegularExpressions.Regex.Replace(blog.Markdown_Content, "<.*?>", String.Empty).Take(200).ToArray()))
+                    <a href="/blog/@blog.Id" class="l">@(blog.Markdown_Content != null && blog.Markdown_Content.Count() > 200 ? "...(more)" : "")</a>
                 }
                 else
                 {
-                    @Html.Raw(Westwind.AspNetCore.Markdown.Markdown.Parse(blog.Markdown_Content))
+                    @*@Html.Raw(Westwind.AspNetCore.Markdown.Markdown.Parse(blog.Markdown_Content))*@
+                    @Html.Raw(blog.Markdown_Content)
                 }
             </div>
             <div class="blogFooter">
@@ -81,4 +80,6 @@
             }
         </div>
     }
+
 </div>
+<partial name="~/Views/Shared/_sidebar.cshtml" />

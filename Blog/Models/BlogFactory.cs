@@ -177,5 +177,20 @@ namespace Blog.Models
                     });
             }
         }
+        public static void AddViewCount(int id)
+        {
+            try
+            {
+                using (var connection = new SqlConnection(blogConnStr))
+                {
+                    connection.Execute("execute sp_update_blog_view_count @id", new { id = id });
+                }
+            }
+            catch (Exception)
+            {
+
+            }
+
+        }
     }
 }

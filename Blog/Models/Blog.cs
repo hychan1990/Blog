@@ -32,6 +32,7 @@ namespace Blog.Models
         public bool NoComment { get; set; }
         [Required]
         public bool NoRobots { get; set; }
+        public int view_count { get; set; }
 
     }
 }
