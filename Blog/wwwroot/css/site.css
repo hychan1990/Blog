@@ -75,7 +75,6 @@ body {
     --------------------------------------------------------------------------
 */
 #blogBody {
-    margin-bottom: 60px; /*for the footer*/
     float: left;
     /*width: 75%;
     margin-left: 5px;
@@ -88,7 +87,6 @@ body {
     /*width: 20%;*/
     float: left;
     font-family: 'Lucida Sans', 'Lucida Grande', 'Lucida Sans Unicode', sans-serif;
-    margin-bottom: 60px; /*for the footer when small device made it float to lower then body*/
 }
 .sidebarComponent {
     margin: 0 0 20px 0;
@@ -166,6 +164,12 @@ body {
 .ck-editor__editable {
     min-height: 500px;
 }
+.bottom {
+    margin-bottom: 120px; /*for the footer*/
+}
+#pageIndexer {
+    text-align: center;
+}
 /*Small item
     --------------------------------------------------------------------------
 */
@@ -194,8 +198,4 @@ small.orange {
 }
 small.gray {
     color: #999;
-}
-.pageIndexer{
-    text-align:center;
-    margin-bottom:20px;
 }
