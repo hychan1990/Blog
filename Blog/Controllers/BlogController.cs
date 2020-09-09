@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Blog.Models;
 using Microsoft.AspNetCore.Http;
 using System.Net;
+using MyToolNetStandard;
 
 namespace Blog.Controllers
 {
@@ -32,36 +33,53 @@ namespace Blog.Controllers
         {
             ViewData["ListMode"] = false;
             ViewData["BlogId"] = id;
+            var admin = AuthService.AuthenticateAdmin(Request.Cookies["a1"]);
+            if (admin)
+            {
+                ViewData["AdminMode"] = true;
+            }
+
             List<Models.Blog> blogs = BlogFactory.GetBlog(id);
-            if (blogs.Count>0)
+            if (blogs.Count > 0)
             {
                 ViewData["Title"] = blogs[0].Title;
-                BlogFactory.AddViewCount(id);
+                if (!admin)
+                {
+                    BlogFactory.AddViewCount(id);
+                }
                 return View("index", blogs);
             }
             else
             {
                 return Redirect("~/");
             }
-            
+
         }
         public IActionResult Create()
         {
+            /*
             TempData["ip"] = _accessor.HttpContext.Connection.RemoteIpAddress.ToString();
             if (TempData["ip"].ToString() != "::1" || Request.Cookies["login"] != "1")
             {
                 return Redirect("~/");
+            }*/
+
+            if (AuthService.AuthenticateAdmin(Request.Cookies["a1"]))
+            {
+                return View();
             }
-            return View();
+            return Redirect("~/");
         }
         [HttpPost]
         public IActionResult Create(Blog.Models.Blog blog)
         {
+            /*
             TempData["ip"] = _accessor.HttpContext.Connection.RemoteIpAddress.ToString();
             if (TempData["ip"].ToString() != "::1" || Request.Cookies["login"] != "1")
             {
                 return Redirect("~/");
             }
+            */
             if (!ModelState.IsValid)
             {
                 return View();
@@ -71,14 +89,70 @@ namespace Blog.Controllers
             blog.Deleted = false;
             try
             {
-                BlogFactory.CreateBlog(blog);
+                if (AuthService.AuthenticateAdmin(Request.Cookies["a1"]))
+                {
+                    BlogFactory.CreateBlog(blog);
+                }
+                else
+                {
+                    return View();
+                }
             }
             catch (Exception ex)
             {
                 TempData["Message"] = "出現錯誤。";
                 return View();
             }
-            
+
+            return Redirect("~/");
+        }
+        [Route("/blog/edit/{id:int}")]
+        public IActionResult Edit(int id)
+        {
+            var blogList = BlogFactory.GetBlog(id);
+            if (blogList.Count > 0)
+            {
+                Blog.Models.Blog blog = blogList[0];
+                ViewData["EditMode"] = true;
+                return View("Create", blog);
+            }
+            return Redirect("~/");
+        }
+        [Route("/blog/edit/{id:int}")]
+        [HttpPost]
+        public IActionResult Edit(Blog.Models.Blog blog)
+        {
+            /*
+            TempData["ip"] = _accessor.HttpContext.Connection.RemoteIpAddress.ToString();
+            if (TempData["ip"].ToString() != "::1" || Request.Cookies["login"] != "1")
+            {
+                return Redirect("~/");
+            }
+            */
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+            blog.Author_Id = 1;
+            blog.Modify_Ts = DateTime.Now;
+            blog.Deleted = false;
+            try
+            {
+                if (AuthService.AuthenticateAdmin(Request.Cookies["a1"]))
+                {
+                    BlogFactory.UpdateBlog(blog);
+                }
+                else
+                {
+                    return View();
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["Message"] = "出現錯誤。";
+                return View();
+            }
+
             return Redirect("~/");
         }
     }

@@ -177,6 +177,28 @@ namespace Blog.Models
                     });
             }
         }
+        public static void UpdateBlog(Blog blog)
+        {
+            using (var connection = new SqlConnection(blogConnStr))
+            {
+
+                connection.Execute(@"execute dbo.sp_update_blog @blog_id,@title,@markdown_content,@category,@tags
+,@thumbnail,@deleted,@password,@no_comment,@no_robots",
+                    new
+                    {
+                        blog_id = blog.Id,
+                        title = blog.Title,
+                        markdown_content = blog.Markdown_Content,
+                        category = blog.Category,
+                        tags = blog.Tags,
+                        thumbnail = blog.Thumbnail,
+                        deleted = blog.Deleted,
+                        password = blog.Password,
+                        no_comment = blog.NoComment,
+                        no_robots = blog.NoRobots
+                    });
+            }
+        }
         public static void AddViewCount(int id)
         {
             try

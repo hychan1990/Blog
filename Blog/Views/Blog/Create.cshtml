@@ -12,9 +12,9 @@
     }
 </head>
 <h2>Create Blog</h2>
-<div id="blogBody" class="col-md-9 col-sm-12 col-12">
+<div id="blogBody" class="col-md-9 col-sm-12 col-12 bottom">
     <p>@TempData["ip"]</p>
-    <form action="/Blog/Create" method="post">
+    <form action="/Blog/@((ViewData["EditMode"] != null && (Boolean)ViewData["EditMode"]) ? $"Edit/{Model.Id}" : "Create")" method="post">
         <div class="form-group">
             <label class="col-md-2" asp-for="Title" for="title">Title</label>
             <input class="col-md-8" asp-for="Title" type="text" name="title" id="title" />
@@ -52,32 +52,43 @@
             <script>
                 // Replace the <textarea id="editor1"> with a CKEditor 4
                 // instance, using default configuration.
-                CKEDITOR.replace('content');
+                var editor = CKEDITOR.replace('content');
             </script>
+            @if (ViewData["EditMode"] != null && (Boolean)ViewData["EditMode"])
+            {
+                <script>
+                    editor.on('instanceReady', function () {
+                        editor.insertHtml(`@Html.Raw(Model.Markdown_Content)`);
+                    });
+                </script>
+            }
+
             @*below querySelector('#content') meant replace the element of id="content"*@
             @*
-        <script>
+            <script>
 
-            ClassicEditor
-                .create(document.querySelector('#content'), {
-                    codeBlock: {
-                        languages: [{ language: 'cs', label: 'C#' },
-                            { language: 'cpp', label: 'C++' },
-                            { language: 'css', label: 'CSS' },
-                            { language: 'html', label: 'HTML' },
-                            { language: 'java', label: 'Java' },
-                            { language: 'javascript', label: 'JavaScript' },
-                            { language: 'python', label: 'Python' }]
-                    }
-                })
-                .catch(error => {
-                    console.error(error);
-                });
-        </script>
+                ClassicEditor
+                    .create(document.querySelector('#content'), {
+                        codeBlock: {
+                            languages: [{ language: 'cs', label: 'C#' },
+                                { language: 'cpp', label: 'C++' },
+                                { language: 'css', label: 'CSS' },
+                                { language: 'html', label: 'HTML' },
+                                { language: 'java', label: 'Java' },
+                                { language: 'javascript', label: 'JavaScript' },
+                                { language: 'python', label: 'Python' }]
+                        }
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    });
+            </script>
             *@
         </div>
         <hr style="border-top:1px solid #eee" />
-        <input type="submit" value="Submit" class="btn btn-default" style="border:1px solid black;" />
+        <input type="submit" value="@((ViewData["EditMode"] != null && (Boolean)ViewData["EditMode"])?"Edit":"Submit")" class="btn btn-default" style="border:1px solid black;" />
+        
+
     </form>
 </div>
 <partial name="~/Views/Shared/_sidebar.cshtml" />
