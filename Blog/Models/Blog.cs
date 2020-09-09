@@ -24,7 +24,7 @@ namespace Blog.Models
         public string Thumbnail { get; set; }
         [Required]
         public DateTime Create_Ts { get; set; }
-        public DateTime Modify_Ts { get; set; }
+        public DateTime? Modify_Ts { get; set; }
         public byte[] Password { get; set; }
         [Required]
         public bool Deleted { get; set; }

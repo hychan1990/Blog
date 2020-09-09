@@ -15,13 +15,16 @@
     <div class="blogPost">
         <a class="blogTitle" href="/blog/@blog.Id">@blog.Title</a>
         <div class="header">
-            <small class="gray">@blog.Create_Ts.ToString("yyyy-MM-dd hh:mm")</small>
+            <small class="gray headerItems">@blog.Create_Ts.ToString("yyyy-MM-dd hh:mm")</small>
+            @if(blog.Modify_Ts != null){
+        <small class="gray headerItems">Last Edited: @(((DateTime)blog.Modify_Ts).ToString("yyyy-MM-dd hh:mm"))</small>
+            }
             @{Random rnd = new Random();
                     int ranComment = rnd.Next(1, 13);
                     int ranReadCount = rnd.Next(1, 10000);
             }
-            <small class="gray view_count">@string.Format("{0:n0}", blog.view_count)</small>
-            <small class="orange comment_count">(@ranComment)</small>
+        <small class="gray view_count headerItems">@string.Format("{0:n0}", blog.view_count)</small>
+            <small class="orange comment_count headerItems">(@ranComment)</small>
         </div>
         <div class="blogContent">
             @(blog.Markdown_Content == null ? "" : new string(System.Text.RegularExpressions.Regex.Replace(blog.Markdown_Content, "<.*?>", String.Empty).Take(200).ToArray()))

@@ -199,3 +199,6 @@ small.orange {
 small.gray {
     color: #999;
 }
+small.headerItems {
+    margin-right: 10px;
+}
