@@ -12,14 +12,14 @@ namespace Blog.Controllers
         public IActionResult Index()
         {
             List<Models.Blog> blogs = BlogFactory.GetBlogsByPage(1);
-            ViewData["ListMode"] = true;
+            //ViewData["ListMode"] = true;
             return View("~/Views/Blog/index.cshtml", blogs);
         }
         [Route("/page/{p:int}")]
         public IActionResult ByPage(int p)
         {
             List<Models.Blog> blogs = BlogFactory.GetBlogsByPage(p);
-            ViewData["ListMode"] = true;
+            //ViewData["ListMode"] = true;
             ViewData["CurrentPage"] = p;
             return View("~/Views/Blog/index.cshtml", blogs);
         }

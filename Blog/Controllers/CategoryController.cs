@@ -13,7 +13,7 @@ namespace Blog.Controllers
         public IActionResult Index(string t)
         {
             List<Models.Blog> blogs = BlogFactory.GetBlogsByCategory(1, t);
-            ViewData["ListMode"] = true;
+            //ViewData["ListMode"] = true;
             ViewData["SearchMode"] = "category";
             ViewData["CurrentPage"] = 1;
             ViewData["CurrentSearchWord"] = t;
@@ -24,7 +24,7 @@ namespace Blog.Controllers
         public IActionResult ByPage(string t, int p)
         {
             List<Models.Blog> blogs = BlogFactory.GetBlogsByCategory(p, t);
-            ViewData["ListMode"] = true;
+            //ViewData["ListMode"] = true;
             ViewData["SearchMode"] = "category";
             ViewData["CurrentPage"] = p;
             ViewData["CurrentSearchWord"] = t;

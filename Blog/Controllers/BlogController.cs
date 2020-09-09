@@ -24,14 +24,14 @@ namespace Blog.Controllers
         public IActionResult Index()
         {
             List<Models.Blog> blogs = BlogFactory.GetBlogsByPage(1);
-            ViewData["ListMode"] = true;
+            //ViewData["ListMode"] = true;
             ViewData["Title"] = "";
             return View(blogs);
         }
         [Route("/blog/{id:int}")]
         public IActionResult Individual(int id)
         {
-            ViewData["ListMode"] = false;
+            //ViewData["ListMode"] = false;
             ViewData["BlogId"] = id;
             var admin = AuthService.AuthenticateAdmin(Request.Cookies["a1"]);
             if (admin)
@@ -47,7 +47,7 @@ namespace Blog.Controllers
                 {
                     BlogFactory.AddViewCount(id);
                 }
-                return View("index", blogs);
+                return View("Detail", blogs[0]);
             }
             else
             {

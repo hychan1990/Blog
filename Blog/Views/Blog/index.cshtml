@@ -10,15 +10,10 @@
         <a class="blogTitle">Searching: @ViewData["CurrentRoute"]</a>
     </div>
     }
-    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v8.0" nonce="ly0yUY51"></script>
-    @{string dhref = string.Format("https://hychan.asuscomm.com/blog/{0}", ViewData["BlogId"]);}
     @foreach (Blog blog in Model)
     {
     <div class="blogPost">
         <a class="blogTitle" href="/blog/@blog.Id">@blog.Title</a>
-        @if(!(Boolean)ViewData["ListMode"] && ViewData["AdminMode"] != null && (Boolean)ViewData["AdminMode"]){
-        <a class="l small" href="/blog/edit/@blog.Id" style="float:right">Edit</a>
-            }
         <div class="header">
             <small class="gray">@blog.Create_Ts.ToString("yyyy-MM-dd hh:mm")</small>
             @{Random rnd = new Random();
@@ -29,27 +24,14 @@
             <small class="orange comment_count">(@ranComment)</small>
         </div>
         <div class="blogContent">
-            @if ((Boolean)ViewData["ListMode"])
-                {
             @(blog.Markdown_Content == null ? "" : new string(System.Text.RegularExpressions.Regex.Replace(blog.Markdown_Content, "<.*?>", String.Empty).Take(200).ToArray()))
             <a href="/blog/@blog.Id" class="l">@(blog.Markdown_Content != null && blog.Markdown_Content.Count() > 200 ? "...(more)" : "")</a>
-                }
-                else
-                {
-            @*@Html.Raw(Westwind.AspNetCore.Markdown.Markdown.Parse(blog.Markdown_Content))*@
-            @Html.Raw(blog.Markdown_Content)
-                }
         </div>
         <div class="blogFooter">
             <div class="category">
                 Category:
                 <a href="/category/@blog.Category" class="l">@blog.Category</a>
             </div>
-            @if (!(Boolean)ViewData["ListMode"]){
-            <div id="fb-root"></div>
-            <div class="fb-like" data-href="@dhref" data-width="" data-layout="button_count" data-action="like" data-size="small" data-share="true"
-                 style="padding:2px 10px"></div>
-            }
             @if (!string.IsNullOrEmpty(blog.Tags))
                 {
             <div class="tags">
@@ -64,35 +46,6 @@
         </div>
     </div>
     }
-    @if ((Boolean)ViewData["ListMode"])
-    {
     <partial name="~/Views/Shared/_pagination.cshtml" />
-    }
-    else
-    {
-    <div class="NextPrevPanel">
-        @{BlogIdPair PrevBlog = @BlogFactory.GetBlogPrevBlog((int)ViewData["BlogId"]);}
-        @{BlogIdPair NextBlog = @BlogFactory.GetBlogNextBlog((int)ViewData["BlogId"]);}
-        @if (PrevBlog != null)
-        {
-        <div class="PrevBlog">
-            <small>Prev Article</small>
-            <br />
-            <a href="/blog/@PrevBlog.Id" class="l">@PrevBlog.Title</a>
-        </div>
-        }
-        @if (NextBlog != null)
-        {
-        <div class="NextBlog">
-            <small>Next Article</small>
-            <br />
-            <a href="/blog/@NextBlog.Id" class="l">@NextBlog.Title</a>
-        </div>
-        }
-    </div>
-
-    <div class="fb-comments bottom" data-href=@dhref data-numposts="10" data-width="100%"></div>
-    }
-
 </div>
 <partial name="~/Views/Shared/_sidebar.cshtml" />
