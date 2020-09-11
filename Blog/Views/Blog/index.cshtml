@@ -3,51 +3,49 @@
 <link rel="stylesheet" href="~/lib/highlight/styles/vs2015.css">
 <script src="~/lib/highlight/highlight.pack.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
+@*<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v8.0" nonce="ly0yUY51"></script>*@
 <div id="blogBody" class="col-md-9">
     @if (ViewData["CurrentRoute"] != null)
     {
-    <div class="blogPost">
-        <a class="blogTitle">Searching: @ViewData["CurrentRoute"]</a>
-    </div>
+        <div class="blogPost">
+            <a class="blogTitle">Searching: @ViewData["CurrentRoute"]</a>
+        </div>
     }
     @foreach (Blog blog in Model)
     {
-    <div class="blogPost">
-        <a class="blogTitle" href="/blog/@blog.Id">@blog.Title</a>
-        <div class="header">
-            <small class="gray headerItems">@blog.Create_Ts.ToString("yyyy-MM-dd hh:mm")</small>
-            @if(blog.Modify_Ts != null){
-        <small class="gray headerItems">Last Edited: @(((DateTime)blog.Modify_Ts).ToString("yyyy-MM-dd hh:mm"))</small>
-            }
-            @{Random rnd = new Random();
-                    int ranComment = rnd.Next(1, 13);
-                    int ranReadCount = rnd.Next(1, 10000);
-            }
-        <small class="gray view_count headerItems">@string.Format("{0:n0}", blog.view_count)</small>
-            <small class="orange comment_count headerItems">(@ranComment)</small>
-        </div>
-        <div class="blogContent">
-            @(blog.Markdown_Content == null ? "" : new string(System.Text.RegularExpressions.Regex.Replace(blog.Markdown_Content, "<.*?>", String.Empty).Take(200).ToArray()))
-            <a href="/blog/@blog.Id" class="l">@(blog.Markdown_Content != null && blog.Markdown_Content.Count() > 200 ? "...(more)" : "")</a>
-        </div>
-        <div class="blogFooter">
-            <div class="category">
-                Category:
-                <a href="/category/@blog.Category" class="l">@blog.Category</a>
-            </div>
-            @if (!string.IsNullOrEmpty(blog.Tags))
+        <div class="blogPost">
+            <a class="blogTitle" href="/blog/@blog.Id">@blog.Title</a>
+            <div class="header">
+                <small class="gray headerItems">@blog.Create_Ts.ToString("yyyy-MM-dd hh:mm")</small>
+                @if (blog.Modify_Ts != null)
                 {
-            <div class="tags">
-                Tags:
-                @foreach (var item in blog.Tags.Split(','))
+                    <small class="gray headerItems">Last Edited: @(((DateTime)blog.Modify_Ts).ToString("yyyy-MM-dd hh:mm"))</small>
+                }
+                <small class="gray view_count headerItems">@string.Format("{0:n0}", blog.view_count)</small>
+                @*<small class="fb-comments-count orange comment_count headerItems"  data-href="https://hychan.asuscomm.com/blog/@blog.Id"></small>*@
+            </div>
+            <div class="blogContent">
+                @(blog.Markdown_Content == null ? "" : new string(System.Text.RegularExpressions.Regex.Replace(blog.Markdown_Content, "<.*?>", String.Empty).Take(200).ToArray()))
+                <a href="/blog/@blog.Id" class="l">@(blog.Markdown_Content != null && blog.Markdown_Content.Count() > 200 ? "...(more)" : "")</a>
+            </div>
+            <div class="blogFooter">
+                <div class="category">
+                    Category:
+                    <a href="/category/@blog.Category" class="l">@blog.Category</a>
+                </div>
+                @if (!string.IsNullOrEmpty(blog.Tags))
+                {
+                    <div class="tags">
+                        Tags:
+                        @foreach (var item in blog.Tags.Split(','))
                         {
                             if (item != "")
                             {<a href="/tag/@item.Trim()" class="l" style="margin-right:4px">@item.Trim()</a>}
                     }
-            </div>
+                    </div>
                 }
+            </div>
         </div>
-    </div>
     }
     <partial name="~/Views/Shared/_pagination.cshtml" />
 </div>

@@ -16,15 +16,12 @@
         }
     <div class="header">
         <small class="gray headerItems">@Model.Create_Ts.ToString("yyyy-MM-dd hh:mm")</small>
-        @if(Model.Modify_Ts != null){
-        <small class="gray headerItems">Last Edited: @(((DateTime)Model.Modify_Ts).ToString("yyyy-MM-dd hh:mm"))</small>
-            }
-        @{Random rnd = new Random();
-                int ranComment = rnd.Next(1, 13);
-                int ranReadCount = rnd.Next(1, 10000);
+        @if (Model.Modify_Ts != null)
+        {
+            <small class="gray headerItems">Last Edited: @(((DateTime)Model.Modify_Ts).ToString("yyyy-MM-dd hh:mm"))</small>
         }
         <small class="gray view_count headerItems">@string.Format("{0:n0}", @Model.view_count)</small>
-        <small class="orange comment_count headerItems">(@ranComment)</small>
+        @*<small class="fb-comments-count orange comment_count headerItems" data-href="https://hychan.asuscomm.com/blog/@Model.Id"></small>*@
     </div>
         <div class="blogContent">
             @Html.Raw(@Model.Markdown_Content)
