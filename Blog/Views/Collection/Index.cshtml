@@ -1,0 +1,28 @@
+﻿@model IEnumerable<Collection>
+
+<div id="blogBody" class="col-md-9 bottom">
+    <p style="font-size:large;margin-top:10px">Collections</p>
+    @foreach (var collection in Model)
+    {
+    <div class="row">
+        <div class="col-md-6">
+            <a href="/collection/@collection.Id" class="small l col-md-6">@collection.Name</a>
+        </div>
+
+        @if (collection.Create_ts.HasValue)
+        {
+            <div class="col-md-3">
+                <small>Created: @(((DateTime)collection.Create_ts).ToString("yyyy-MM-dd"))</small>
+            </div>
+        }
+        @if (collection.Modify_ts.HasValue)
+        {
+            <div class="col-md-3">
+                <small>Modified: @(((DateTime)collection.Modify_ts).ToString("yyyy-MM-dd"))</small>
+            </div>
+        }
+    </div>
+
+    }
+</div>
+<partial name="~/Views/Shared/_sidebar.cshtml" />

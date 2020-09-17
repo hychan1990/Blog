@@ -62,6 +62,21 @@ namespace Blog.Models
             var filtered = from entry in dict orderby entry.Value descending select entry;
             return filtered.ToDictionary(x => x.Key, x => x.Value);
         }
-        
+        public static List<Collection> GetCollections()
+        {
+            try
+            {
+                using (var connection = new SqlConnection(blogConnStr))
+                {
+                    var result = connection.Query<Collection>("select * from collection").ToList();
+                    return result;
+                }
+            }
+            catch (Exception)
+            {
+                return new List<Collection>();
+            }
+
+        }
     }
 }
