@@ -85,8 +85,27 @@ namespace Blog.Models
 
                 //return connection.Query<Blog>($"select top {page*blogPerPage} * from blog where visible = 1 order by id desc").ToList();
             }
-
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="page">1 for the first page</param>
+        /// <returns></returns>
+        public static List<Blog> GetBlogsByCollection(int page, int collectionId)
+        {
+            if (page == 0)
+            {
+                throw new Exception("page can't be 0, please pass 1 or larger.");
+            }
+            using (var connection = new SqlConnection(blogConnStr))
+            {
+                return connection.Query<Blog>($@"select * from GetPageByCollection(@page,@blogPerPage,@collectionId)"
+                    , new { page = page, blogPerPage = blogPerPage, collectionId = collectionId }).ToList();
+
+                //return connection.Query<Blog>($"select top {page*blogPerPage} * from blog where visible = 1 order by id desc").ToList();
+            }
+        }
+
         public static int GetTotalPages()
         {
             using (var connection = new SqlConnection(blogConnStr))
@@ -100,7 +119,7 @@ namespace Blog.Models
             using (var connection = new SqlConnection(blogConnStr))
             {
                 //id is int so 5 = 0, 15 = 1, need to add 1
-                return connection.QuerySingle<int>($@"SELECT dbo.GetTotalPagesByTag(@tag)", new { tag = tag });
+                return connection.QuerySingle<int>($@"SELECT dbo.GetTotalPagesByTag(@tag, @blogPerPage)", new { tag = tag, blogPerPage = blogPerPage });
             }
         }
         public static int GetTotalPagesByCategory(string tag)
@@ -108,7 +127,15 @@ namespace Blog.Models
             using (var connection = new SqlConnection(blogConnStr))
             {
                 //id is int so 5 = 0, 15 = 1, need to add 1
-                return connection.QuerySingle<int>($@"SELECT dbo.GetTotalPagesByCategory(@tag)", new { tag = tag });
+                return connection.QuerySingle<int>($@"SELECT dbo.GetTotalPagesByCategory(@tag, @blogPerPage)", new { tag = tag, blogPerPage = blogPerPage });
+            }
+        }
+        public static int GetTotalPagesByCollection(int collectionId)
+        {
+            using (var connection = new SqlConnection(blogConnStr))
+            {
+                //id is int so 5 = 0, 15 = 1, need to add 1
+                return connection.QuerySingle<int>($@"SELECT dbo.GetTotalPagesByCollection(@collectionId, @blogPerPage)", new { collectionId = collectionId, blogPerPage = blogPerPage });
             }
         }
         /// <summary>
@@ -155,6 +182,7 @@ namespace Blog.Models
             
         }
         #endregion
+        #region Post
         public static void CreateBlog(Blog blog)
         {
             using (var connection = new SqlConnection(blogConnStr))
@@ -214,5 +242,6 @@ namespace Blog.Models
             }
 
         }
+        #endregion
     }
 }
