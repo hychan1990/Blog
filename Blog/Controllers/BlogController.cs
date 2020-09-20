@@ -73,8 +73,10 @@ namespace Blog.Controllers
         [HttpPost]
         public IActionResult Create(Blog.Models.Blog blog)
         {
+            
+            //TempData["ip"] = _accessor.HttpContext.Connection.RemoteIpAddress.ToString();
+            string requestIp = _accessor.HttpContext.Connection.RemoteIpAddress.ToString();
             /*
-            TempData["ip"] = _accessor.HttpContext.Connection.RemoteIpAddress.ToString();
             if (TempData["ip"].ToString() != "::1" || Request.Cookies["login"] != "1")
             {
                 return Redirect("~/");
@@ -92,6 +94,7 @@ namespace Blog.Controllers
                 if (AuthService.AuthenticateAdmin(Request.Cookies["a1"]))
                 {
                     BlogFactory.CreateBlog(blog);
+                    Logger.InsertLog("INFO", "Blog.Create", $"IP:{requestIp} created blog.");
                 }
                 else
                 {
@@ -122,6 +125,7 @@ namespace Blog.Controllers
         [HttpPost]
         public IActionResult Edit(Blog.Models.Blog blog)
         {
+            string requestIp = _accessor.HttpContext.Connection.RemoteIpAddress.ToString();
             /*
             TempData["ip"] = _accessor.HttpContext.Connection.RemoteIpAddress.ToString();
             if (TempData["ip"].ToString() != "::1" || Request.Cookies["login"] != "1")
@@ -141,6 +145,7 @@ namespace Blog.Controllers
                 if (AuthService.AuthenticateAdmin(Request.Cookies["a1"]))
                 {
                     BlogFactory.UpdateBlog(blog);
+                    Logger.InsertLog("INFO", "Blog.Edit", $"IP:{requestIp} edited blog id:{blog.Id}");
                 }
                 else
                 {
