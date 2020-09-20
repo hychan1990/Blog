@@ -79,7 +79,6 @@ body {
     /*width: 75%;
     margin-left: 5px;
     margin-right: 5px;*/
-    overflow: hidden;
 }
 
 #sidebar {
@@ -156,10 +155,12 @@ body {
 
 }
 .NextBlog{
-    float:right
+    float:right;
+    margin-bottom: 5%;
 }
-.PrevBlog{
-    float:left
+.PrevBlog {
+    float: left;
+    margin-bottom: 5%;
 }
 .ck-editor__editable {
     min-height: 500px;
