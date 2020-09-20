@@ -196,12 +196,13 @@ a.l.highlighted {
     background-color: steelblue;
     color:white;
 }
-small.orange {
+.orange {
     color: #f60;
 }
-small.gray {
+.gray {
     color: #999;
 }
-small.headerItems {
+.headerItems {
     margin-right: 10px;
+    font-size: smaller;
 }

@@ -3,28 +3,7 @@
 <link rel="stylesheet" href="~/lib/highlight/styles/vs2015.css">
 <script src="~/lib/highlight/highlight.pack.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
-@*<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v8.0" nonce="ly0yUY51"></script>*@
-<script>
-    window.fbAsyncInit = function () {
-        FB.init({
-            appId: '609591943051314',
-            cookie: true,
-            xfbml: true,
-            version: 'v8.0'
-        });
-
-        FB.AppEvents.logPageView();
-
-    };
-
-    (function (d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) { return; }
-        js = d.createElement(s); js.id = id;
-        js.src = "https://connect.facebook.net/en_US/sdk.js";
-        fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
-</script>
+<script id="dsq-count-scr" src="//cancode-co.disqus.com/count.js" async></script>
 <div id="blogBody" class="col-md-9">
     @if (ViewData["CurrentRoute"] != null)
     {
@@ -43,7 +22,7 @@
                     <small class="gray headerItems">Last Edited: @(((DateTime)blog.Modify_Ts).ToString("yyyy-MM-dd hh:mm"))</small>
                 }
                 <small class="gray view_count headerItems">@string.Format("{0:n0}", blog.view_count)</small>
-                @*<small class="fb-comments-count orange comment_count headerItems"  data-href="https://hychan.asuscomm.com/blog/@blog.Id"></small>*@
+                <a href="https://cancode.co/blog/@blog.Id#disqus_thread" class="orange headerItems"></a>
             </div>
             <div class="blogContent">
                 @(blog.Markdown_Content == null ? "" : new string(System.Text.RegularExpressions.Regex.Replace(blog.Markdown_Content, "<.*?>", String.Empty).Take(200).ToArray()))
