@@ -4,6 +4,27 @@
 <script src="~/lib/highlight/highlight.pack.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
 @*<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v8.0" nonce="ly0yUY51"></script>*@
+<script>
+    window.fbAsyncInit = function () {
+        FB.init({
+            appId: '609591943051314',
+            cookie: true,
+            xfbml: true,
+            version: 'v8.0'
+        });
+
+        FB.AppEvents.logPageView();
+
+    };
+
+    (function (d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) { return; }
+        js = d.createElement(s); js.id = id;
+        js.src = "https://connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+</script>
 <div id="blogBody" class="col-md-9">
     @if (ViewData["CurrentRoute"] != null)
     {
