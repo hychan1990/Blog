@@ -3,9 +3,6 @@
     <link rel="stylesheet" href="~/lib/highlight/styles/vs2015.css">
     <script src="~/lib/highlight/highlight.pack.js"></script>
     <script>hljs.initHighlightingOnLoad();</script>
-    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v8.0" nonce="ly0yUY51"></script>
-    <meta property="fb:app_id" content="609591943051314" />
-
 </head>
 <div id="blogBody" class="col-md-9">
     @{string dhref = string.Format("https://hychan.asuscomm.com/blog/{0}", Model.Id);}
@@ -15,15 +12,15 @@
         {
             <a class="l small" href="/blog/edit/@Model.Id" style="float:right">Edit</a>
         }
-    <div class="header">
-        <small class="gray headerItems">@Model.Create_Ts.ToString("yyyy-MM-dd hh:mm")</small>
-        @if (Model.Modify_Ts != null)
-        {
-            <small class="gray headerItems">Last Edited: @(((DateTime)Model.Modify_Ts).ToString("yyyy-MM-dd hh:mm"))</small>
-        }
-        <small class="gray view_count headerItems">@string.Format("{0:n0}", @Model.view_count)</small>
-        @*<small class="fb-comments-count orange comment_count headerItems" data-href="https://hychan.asuscomm.com/blog/@Model.Id"></small>*@
-    </div>
+        <div class="header">
+            <small class="gray headerItems">@Model.Create_Ts.ToString("yyyy-MM-dd hh:mm")</small>
+            @if (Model.Modify_Ts != null)
+            {
+                <small class="gray headerItems">Last Edited: @(((DateTime)Model.Modify_Ts).ToString("yyyy-MM-dd hh:mm"))</small>
+            }
+            <small class="gray view_count headerItems">@string.Format("{0:n0}", @Model.view_count)</small>
+
+        </div>
         <div class="blogContent">
             @Html.Raw(@Model.Markdown_Content)
         </div>
@@ -34,7 +31,7 @@
             </div>
             <div id="fb-root"></div>
             <div class="fb-like" data-href="@dhref" data-width="" data-layout="button_count" data-action="like" data-size="small" data-share="true"
-                    style="padding:2px 10px"></div>
+                 style="padding:2px 10px"></div>
             @if (!string.IsNullOrEmpty(@Model.Tags))
             {
                 <div class="tags">
@@ -69,7 +66,27 @@
             </div>
         }
     </div>
+    <div id="disqus_thread"></div>
+    <script>
 
-    <div class="fb-comments bottom" data-href=@dhref data-numposts="10" data-width="100%"></div>
+        /**
+        *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+        *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+        
+        var disqus_config = function () {
+            this.page.url = "https://cancode.co/blog/@Model.Id";  // Replace PAGE_URL with your page's canonical URL variable
+            this.page.identifier = "@Model.Id @Model.Title"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+            this.language = "zh_TW";
+        };
+        
+        (function () { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = 'https://cancode-co.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
 </div>
 <partial name="~/Views/Shared/_sidebar.cshtml" />
