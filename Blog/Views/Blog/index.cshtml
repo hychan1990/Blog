@@ -26,8 +26,10 @@
                 <a href="https://cancode.co/blog/@blog.Id#disqus_thread" class="orange headerItems"></a>
             </div>
             <div class="blogContent">
-                @(blog.Markdown_Content == null ? "" : new string(System.Text.RegularExpressions.Regex.Replace(blog.Markdown_Content, "<.*?>", String.Empty).Take(200).ToArray()))
-                <a href="/blog/@blog.Id" class="l">@(blog.Markdown_Content != null && blog.Markdown_Content.Count() > 200 ? "...(more)" : "")</a>
+                @*@(blog.Markdown_Content == null ? null : Html.Raw(new string(System.Text.RegularExpressions.Regex.Replace(blog.Markdown_Content, "<.*?>", String.Empty).Take(200).ToArray())))*@
+                @(blog.Markdown_Content == null ? null : Html.Raw(new string(System.Text.RegularExpressions.Regex.Replace(blog.Markdown_Content, @"<(?!br\s*\/?)[^>]+>", String.Empty).Take(200).ToArray())))
+                
+                    <a href="/blog/@blog.Id" class="l">@(blog.Markdown_Content != null && blog.Markdown_Content.Count() > 200 ? "...(more)" : "")</a>
             </div>
             <div class="blogFooter">
                 <div class="category">
