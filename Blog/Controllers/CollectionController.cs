@@ -20,7 +20,7 @@ namespace Blog.Controllers
             ViewData["SearchMode"] = "collection";
             ViewData["CurrentPage"] = 1;
             ViewData["CurrentSearchWord"] = collectionId;
-            ViewData["CurrentRoute"] = $"/collection/{collectionId}";
+            ViewData["CurrentRoute"] = $"/collection/{SidebarFactory.GetCollectionName(collectionId)}";
             return View("~/Views/Blog/index.cshtml", BlogFactory.GetBlogsByCollection(1, collectionId));
         }
         [Route("/collection/{collectionId:int}/page/{p:int}")]
@@ -30,7 +30,7 @@ namespace Blog.Controllers
             ViewData["SearchMode"] = "collection";
             ViewData["CurrentPage"] = p;
             ViewData["CurrentSearchWord"] = collectionId;
-            ViewData["CurrentRoute"] = $"/collection/{collectionId}/page/{p}";
+            ViewData["CurrentRoute"] = $"/collection/{SidebarFactory.GetCollectionName(collectionId)}/page/{p}";
             return View("~/Views/Blog/index.cshtml", blogs);
         }
     }

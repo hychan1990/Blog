@@ -76,7 +76,21 @@ namespace Blog.Models
             {
                 return new List<Collection>();
             }
-
+        }
+        public static string GetCollectionName(int id)
+        {
+            try
+            {
+                using (var connection = new SqlConnection(blogConnStr))
+                {
+                    var result = connection.QuerySingle<string>("select name from collection where id = @id", new { id = id });
+                    return result;
+                }
+            }
+            catch (Exception)
+            {
+                return "";
+            }
         }
     }
 }
