@@ -7,6 +7,7 @@ using Blog.Models;
 using Microsoft.AspNetCore.Http;
 using System.Net;
 using MyToolNetStandard;
+using System.Web;
 
 namespace Blog.Controllers
 {
@@ -25,7 +26,7 @@ namespace Blog.Controllers
         {
             List<Models.Blog> blogs = BlogFactory.GetBlogsByPage(1);
             //ViewData["ListMode"] = true;
-            ViewData["Title"] = "";
+            //ViewData["Title"] = "";
             return View(blogs);
         }
         [Route("/blog/{id:int}")]
@@ -43,6 +44,8 @@ namespace Blog.Controllers
             if (blogs.Count > 0)
             {
                 ViewData["Title"] = blogs[0].Title;
+                ViewData["Description"] = blogs[0].Markdown_Content == null ? "" : new string(System.Text.RegularExpressions.Regex.Replace(blogs[0].Markdown_Content, @"<.*?>", string.Empty).Take(100).ToArray());
+                ViewData["keywords"] = blogs[0].Tags;
                 if (!admin)
                 {
                     BlogFactory.AddViewCount(id);

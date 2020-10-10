@@ -3,9 +3,19 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@(ViewData["Title"]!=""?ViewData["Title"]+" - ":"")Chan Can Code</title>
+    <title>@System.Web.HttpUtility.HtmlDecode(ViewData["Title"]!=null?ViewData["Title"] + " - Chan Can Code" : "Chan Can Code")</title>
+
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <meta name="title" content="@(ViewData["Title"]!=null? @$"{ViewData["Title"].ToString()} - Chan Can Code" : "Chan Can Code")"/>
+    <meta name="og:title" content="@(ViewData["Title"]!=null? @$"{ViewData["Title"].ToString()} - Chan Can Code" : "Chan Can Code")"/>
+    <meta name="description" content="@System.Web.HttpUtility.HtmlDecode(ViewData["Description"] != null ? ViewData["Description"].ToString() : "一個.net為主的編程部落格，分享站主所學到的一切編程知識，有時也有實倉投資紀錄、徵友公告、求職資訊 (笑")" ; />
+    <meta name="og:description" content="@System.Web.HttpUtility.HtmlDecode(ViewData["Description"] != null ? ViewData["Description"].ToString() : "一個.net為主的編程部落格，分享站主所學到的一切編程知識，有時也有實倉投資紀錄、徵友公告、求職資訊 (笑")" ; />
+    <meta name="keywords" content="@(ViewData["Keywords"]!= null? ViewData["Keywords"].ToString() :"C#, hk programmer, coding blog")" />
+    <meta name="og:keywords" content="@(ViewData["Keywords"]!= null? ViewData["Keywords"].ToString() :"C#, hk programmer, coding blog")" />
+
+
+
 </head>
 <body>
     <header>
