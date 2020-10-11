@@ -36,4 +36,9 @@
             <a href="/tag/@pair.Key.Trim().Replace("#","%23")" class="l" style="font-size:small">@(string.Format("{0}({1})", pair.Key, pair.Value))</a>
         }
     </div>
+    <div class="sidebarComponent">
+        <small>View Counts</small>
+        <br />
+        <small>@SidebarFactory.GetViewCount()</small>
+    </div>
 </div>

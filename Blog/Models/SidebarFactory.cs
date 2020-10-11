@@ -28,7 +28,22 @@ namespace Blog.Models
             }
         }
         */
+        public static int GetViewCount()
+        {
+            try
+            {
+                using (var connection = new SqlConnection(blogConnStr))
+                {
+                    int vc = connection.QuerySingle<int>("exec dbo.sp_get_view_count");
+                    return vc;
+                }
+            }
+            catch (Exception)
+            {
+                return 0;
+            }
 
+        }
         
         public static Dictionary<string, int> GetSortedCount(string tableColumn)
         {
