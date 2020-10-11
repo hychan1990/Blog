@@ -58,7 +58,8 @@
             {
                 <script>
                     editor.on('instanceReady', function () {
-                        editor.insertHtml(`@Html.Raw(Model.Markdown_Content)`);
+                        @*the grave accent character ` cannot will break the string, handle escape*@
+                        editor.insertHtml(`@Html.Raw(Model.Markdown_Content.Replace("`",@"\`"))`);
                     });
                 </script>
             }
