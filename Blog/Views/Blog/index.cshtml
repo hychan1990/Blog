@@ -33,7 +33,12 @@
             <div class="blogFooter">
                 <div class="category">
                     Category:
-                    <a href="/category/@blog.Category" class="l">@blog.Category</a>
+                    @foreach (var item in blog.Category.Split(','))
+                    {
+                        if (item != "")
+                        {<a href="/category/@item.Trim()" class="l" style="margin-right:4px">@item.Trim()</a>}
+                }
+                    @*<a href="/category/@blog.Category" class="l">@blog.Category</a>*@
                 </div>
                 @if (!string.IsNullOrEmpty(blog.Tags))
                 {
