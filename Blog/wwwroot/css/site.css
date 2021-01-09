@@ -125,6 +125,19 @@ body {
     display: flow-root;
     font-size:small;
 }
+.pin {
+    float: left;
+    display: inline;
+    padding: 2px 10px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    -moz-background-clip: padding;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+    background-color: #FAFAFA;
+    color: #888;
+}
 .tags {
     float: right;
     display: inline;

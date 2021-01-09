@@ -33,6 +33,6 @@ namespace Blog.Models
         [Required]
         public bool NoRobots { get; set; }
         public int view_count { get; set; }
-
+        public int pin { get; set; }
     }
 }
