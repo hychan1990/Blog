@@ -187,6 +187,9 @@ body {
 pre code{
     font-size: x-small;
 }
+.blogPost img {
+    border: 1px solid #eee;
+}
 /*Small item
     --------------------------------------------------------------------------
 */
