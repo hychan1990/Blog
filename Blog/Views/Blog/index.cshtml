@@ -15,10 +15,10 @@
         <div class="blogPost">
             @if (blog.pin > 0){<div class="pin" style="font-size:small">頂置</div>}<a class="blogTitle" href="/blog/@blog.Id">@blog.Title</a>
             <div class="header">
-                <small class="gray headerItems">@blog.Create_Ts.ToString("yyyy-MM-dd hh:mm")</small>
+                <small class="gray headerItems">@blog.Create_Ts.ToString("yyyy-MM-dd HH:mm")</small>
                 @if (blog.Modify_Ts != null && ((DateTime)blog.Modify_Ts - blog.Create_Ts).Ticks > TimeSpan.TicksPerDay)
                 {
-                    <small class="gray headerItems">Last Edited: @(((DateTime)blog.Modify_Ts).ToString("yyyy-MM-dd hh:mm"))</small>
+                    <small class="gray headerItems">Last Edited: @(((DateTime)blog.Modify_Ts).ToString("yyyy-MM-dd HH:mm"))</small>
                 }
                 <small class="gray view_count headerItems">@string.Format("{0:n0}", blog.view_count)</small>
                 <a href="https://cancode.co/blog/@blog.Id#disqus_thread" class="orange headerItems"></a>

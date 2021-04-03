@@ -20,10 +20,10 @@
             <a class="l small" href="/blog/edit/@Model.Id" style="float:right">Edit</a>
         }
         <div class="header">
-            <small class="gray headerItems">@Model.Create_Ts.ToString("yyyy-MM-dd hh:mm")</small>
+            <small class="gray headerItems">@Model.Create_Ts.ToString("yyyy-MM-dd HH:mm")</small>
             @if (Model.Modify_Ts != null)
             {
-                <small class="gray headerItems">Last Edited: @(((DateTime)Model.Modify_Ts).ToString("yyyy-MM-dd hh:mm"))</small>
+                <small class="gray headerItems">Last Edited: @(((DateTime)Model.Modify_Ts).ToString("yyyy-MM-dd HH:mm"))</small>
             }
             <small class="gray view_count headerItems">@string.Format("{0:n0}", @Model.view_count)</small>
 
